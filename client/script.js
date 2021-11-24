@@ -11,6 +11,7 @@
 
 // CODE HERE
 
+const sayHelloButton = document.querySelector('#say-hello-button');
 
 // PROBLEM 2
 /*
@@ -21,6 +22,12 @@
 
 // CODE HERE
 
+const changeColor = () => {
+    sayHelloButton.style.backgroundColor = 'black';
+    sayHelloButton.style.color = 'white';
+}
+
+sayHelloButton.addEventListener('mouseover', changeColor);
 
 // PROBLEM 3
 /*
@@ -33,6 +40,13 @@
 
 // CODE HERE
 
+const changeBack = () => {
+    sayHelloButton.style.backgroundColor = '#EFEFEF';
+    sayHelloButton.style.color = 'black';
+}
+
+
+sayHelloButton.addEventListener('mouseout', changeBack);
 
 // PROBLEM 4
 /*
@@ -54,6 +68,7 @@ const sayHello = () => {
 
 // CODE HERE
 
+sayHelloButton.addEventListener('click', sayHello);
 
 // PROBLEM 5 
 /*
@@ -68,6 +83,17 @@ const sayHello = () => {
 
 const ohMy = () => {
     // YOUR CODE HERE
+    axios.get('http://localhost:3000/animals')
+        .then((res) => {
+            for (let i = 0; i < res.data.length; i++) {
+                // create a new p element on each iteration
+                let newElement = document.createElement('p');
+                // set the text content of that element equal to the current index of the array
+                newElement.textContent = res.data[i];
+                // select the body which is within the document and append the element that we created to that body
+                document.body.appendChild(newElement);
+            }
+        })
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
@@ -86,9 +112,19 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
     We'll be updating this function in the next problem.
 */
 
+const repeatText = document.getElementById('repeat-text');
 const repeatMyParam = () => {
     //YOUR CODE HERE
+    axios.get('http://localhost:3000/repeat/go')
+        .then((res) => {
+            console.log(res.data);
+            repeatText.textContent = res.data;
+        })
 }
+
+const repeatButton = document.getElementById('repeat-button');
+
+repeatButton.addEventListener('click', repeatMyParam);
 
 // PROBLEM 7
 /*
@@ -112,7 +148,33 @@ const repeatMyParam = () => {
 
 // CODE HERE
 
+const queryButton = document.getElementById('query-button');
 
+const queryFunction = () => {
+    axios.get('http://localhost:3000/query-test', { params: {
+        1: 2
+      }})
+        .then((res) => {
+            console.log(res.data);
+        })
+
+    axios.get('http://localhost:3000/query-test', { params: {
+        
+      }})
+        .then((res) => {
+            console.log(res.data);
+        })
+
+    axios.get('http://localhost:3000/query-test', { params: {
+        1: 2,
+        3: 4
+      }})
+        .then((res) => {
+            console.log(res.data);
+        })
+}
+
+queryButton.addEventListener('click', queryFunction);
 
 ////////////////
 //INTERMEDIATE//
@@ -131,9 +193,9 @@ const repeatMyParam = () => {
 /*
     In the function that you wrote for Problem 8, change the URL to test a couple different scenarios. 
 
-    1: Send no queries on the URL -- what happened? 
+    1: Send no queries on the URL -- what happened? it said that there were no queries given
 
-    2: Send more than 1 query on the URL -- what happened? 
+    2: Send more than 1 query on the URL -- what happened? it said that I sent more than one query
 */
 
 // Edit code in Problem 8
